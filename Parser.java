@@ -12,11 +12,12 @@ public class Parser {
     TK f_declaration[] = {TK.VAR, TK.CONST, TK.none};
     TK f_var_decl[] = {TK.VAR, TK.none};
     TK f_const_decl[] = {TK.CONST, TK.none};
-    TK f_statement[] = {TK.ID, TK.PRINT, TK.IF, TK.WHILE, TK.FOR, TK.none};
+    TK f_statement[] = {TK.ID, TK.PRINT, TK.IF, TK.WHILE, TK.REPEAT, TK.FOR, TK.none};
     TK f_print[] = {TK.PRINT, TK.none};
     TK f_assignment[] = {TK.ID, TK.none};
     TK f_if[] = {TK.IF, TK.none};
     TK f_while[] = {TK.WHILE, TK.none};
+    TK f_repeat[] = {TK.REPEAT, TK.none};
     TK f_for[] = {TK.FOR, TK.none};
     TK f_expression[] = {TK.ID, TK.NUM, TK.STR, TK.COMMA, TK.LPAREN, TK.none};
 
@@ -141,6 +142,8 @@ public class Parser {
             ifproc();
         else if( first(f_while) )
             whileproc();
+        else if ( first(f_repeat))
+			repeatproc();
         else if( first(f_for) )
             forproc();
         else
@@ -208,6 +211,16 @@ public class Parser {
         block();
         mustbe(TK.END);
     }
+    
+    private void repeatproc() {
+		mustbe(TK.REPEAT);
+		gcprint("do");
+		block();
+		mustbe(TK.UNTIL);
+		gcprint("while(!(");
+		expression();
+		gcprint("));");
+	}
 
     private void forproc(){
         mustbe(TK.FOR);

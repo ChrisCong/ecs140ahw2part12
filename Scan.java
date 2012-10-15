@@ -305,6 +305,8 @@ public class Scan {
         if (str.equals("for"))       return TK.FOR;
         if (str.equals("to"))        return TK.TO;
         if (str.equals("downto"))    return TK.DOWNTO;
+        if (str.equals("repeat"))	 return TK.REPEAT;
+        if (str.equals("until"))	 return TK.UNTIL;
   
         return TK.ID;
     }
